@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d97706'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app-container">
+
+  <!-- ====================================================================
+       SIDEBAR NAVIGATION
+       ==================================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-crest">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">ATHENAEUM</div>
+        <div class="brand-subtitle">Library System</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Navigation</div>
+      
+      <a class="nav-item active" data-view="dashboard" onclick="navigateTo('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="nav-item" data-view="books" onclick="navigateTo('books')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        <span>Book Management</span>
+      </a>
+
+      <a class="nav-item" data-view="members" onclick="navigateTo('members')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span>Member Management</span>
+      </a>
+
+      <a class="nav-item" data-view="transactions" onclick="navigateTo('transactions')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+        </svg>
+        <span>Issue & Return</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="c-engine-status">
+        <div class="pulse-dot"></div>
+        <span>C Core: <strong>Connected</strong></span>
+      </div>
+      <button class="btn-reset-demo" onclick="promptResetDemo()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Reset Sample Data
+      </button>
+    </div>
+  </aside>
+
+  <!-- ====================================================================
+       MAIN WRAPPER
+       ==================================================================== -->
+  <div class="main-wrapper">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <div class="page-title-box">
+          <h1 id="page-main-title">Dashboard</h1>
+          <p id="page-sub-title">Overview of books, circulation, and members</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="btn btn-gold" onclick="openIssueModal()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Issue Book
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <main class="content-body">
+
+      <!-- ================================================================
+           VIEW 1: DASHBOARD
+           ================================================================ -->
+      <section class="view-panel active-view" id="view-dashboard">
+        
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card card-blue">
+            <div class="metric-top">
+              <span class="metric-label">Total Books</span>
+              <div class="metric-icon-box">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-total-books">0</div>
+            <div class="metric-sub">Cataloged titles in books.dat</div>
+          </div>
+
+          <div class="metric-card card-green">
+            <div class="metric-top">
+              <span class="metric-label">Available Copies</span>
+              <div class="metric-icon-box">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-available-copies">0</div>
+            <div class="metric-sub">Ready to borrow</div>
+          </div>
+
+          <div class="metric-card card-amber">
+            <div class="metric-top">
+              <span class="metric-label">Issued Copies</span>
+              <div class="metric-icon-box">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-issued-copies">0</div>
+            <div class="metric-sub">Currently borrowed</div>
+          </div>
+
+          <div class="metric-card card-purple">
+            <div class="metric-top">
+              <span class="metric-label">Total Members</span>
+              <div class="metric-icon-box">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+              </div>
+            </div>
+            <div class="metric-value" id="stat-total-members">0</div>
+            <div class="metric-sub">Registered members</div>
+          </div>
+        </div>
+
+        <!-- Quick Action Strip -->
+        <div class="quick-action-strip">
+          <div class="quick-action-title">Quick Actions</div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-secondary btn-sm" onclick="openAddBookModal()">+ Add Book</button>
+            <button class="btn btn-secondary btn-sm" onclick="openAddMemberModal()">+ Register Member</button>
+            <button class="btn btn-gold btn-sm" onclick="openIssueModal()">Issue Book</button>
+          </div>
+        </div>
+
+        <!-- Active Loans Panel on Dashboard -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <h3>Currently Issued Books</h3>
+            <button class="btn btn-sm btn-secondary" onclick="navigateTo('transactions')">View All</button>
+          </div>
+          <div class="panel-body" id="dashboard-mini-loans">
+            <div class="state-container"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================================================================
+           VIEW 2: BOOK MANAGEMENT
+           ================================================================ -->
+      <section class="view-panel" id="view-books">
+        
+        <!-- Filter Toolbar -->
+        <div class="filter-toolbar">
+          <div class="search-input-wrapper">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="search-books-input" class="search-input" placeholder="Search books by title, author, category, or ID...">
+          </div>
+
+          <div class="filter-controls">
+            <select id="filter-book-category" class="select-control">
+              <option value="all">All Categories</option>
+            </select>
+
+            <button class="btn btn-gold" onclick="openAddBookModal()">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              Add Book
+            </button>
+          </div>
+        </div>
+
+        <!-- Book Data Table -->
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table" id="books-table">
+              <thead>
+                <tr>
+                  <th class="sortable sorted" data-col="id" onclick="sortBooksBy('id')">ID <span class="sort-arrow">↑</span></th>
+                  <th class="sortable" data-col="title" onclick="sortBooksBy('title')">Title <span class="sort-arrow">↕</span></th>
+                  <th class="sortable" data-col="author" onclick="sortBooksBy('author')">Author <span class="sort-arrow">↕</span></th>
+                  <th class="sortable" data-col="category" onclick="sortBooksBy('category')">Category <span class="sort-arrow">↕</span></th>
+                  <th>Copies (Avail / Total)</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="books-table-body">
+                <tr><td colspan="7" class="state-container"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================================================================
+           VIEW 3: MEMBER MANAGEMENT
+           ================================================================ -->
+      <section class="view-panel" id="view-members">
+        
+        <!-- Filter Toolbar -->
+        <div class="filter-toolbar">
+          <div class="search-input-wrapper">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="search-members-input" class="search-input" placeholder="Search members by name, ID, email, or department...">
+          </div>
+
+          <div class="filter-controls">
+            <button class="btn btn-primary" onclick="openAddMemberModal()">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+              </svg>
+              Register Member
+            </button>
+          </div>
+        </div>
+
+        <!-- Members Table -->
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Member ID</th>
+                  <th>Full Name</th>
+                  <th>Contact</th>
+                  <th>Department</th>
+                  <th>Active Loans</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="members-table-body">
+                <tr><td colspan="6" class="state-container"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================================================================
+           VIEW 4: ISSUE & RETURN
+           ================================================================ -->
+      <section class="view-panel" id="view-transactions">
+        
+        <div class="filter-toolbar">
+          <div style="font-weight: 600; color: var(--navy-primary);">Active Book Loans</div>
+          <button class="btn btn-gold" onclick="openIssueModal()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Issue Book
+          </button>
+        </div>
+
+        <!-- Loans Table -->
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Loan ID</th>
+                  <th>Book Title</th>
+                  <th>Member Name</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="transactions-table-body">
+                <tr><td colspan="5" class="state-container"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODALS
+     ====================================================================== -->
+
+<!-- Modal: Add Book -->
+<div class="modal-backdrop" id="modal-add-book">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Add New Book</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-add-book')">&times;</button>
+    </div>
+    <form id="form-add-book" onsubmit="handleAddBookSubmit(event)">
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="add-book-id">Book ID <span class="required">*</span></label>
+            <input type="number" id="add-book-id" class="form-input" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="add-book-copies">Copies <span class="required">*</span></label>
+            <input type="number" id="add-book-copies" class="form-input" min="1" value="5" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-book-title">Title <span class="required">*</span></label>
+          <input type="text" id="add-book-title" class="form-input" maxlength="99" placeholder="e.g. Clean Code" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-book-author">Author <span class="required">*</span></label>
+          <input type="text" id="add-book-author" class="form-input" maxlength="99" placeholder="e.g. Robert C. Martin" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-book-category">Category</label>
+          <input type="text" id="add-book-category" class="form-input" maxlength="99" placeholder="e.g. Computer Science">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-book')">Cancel</button>
+        <button type="submit" class="btn btn-gold">Save Book</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Edit Book -->
+<div class="modal-backdrop" id="modal-edit-book">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Edit Book</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-edit-book')">&times;</button>
+    </div>
+    <form id="form-edit-book" onsubmit="handleEditBookSubmit(event)">
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="edit-book-id">Book ID</label>
+            <input type="number" id="edit-book-id" class="form-input" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-book-copies">Total Copies <span class="required">*</span></label>
+            <input type="number" id="edit-book-copies" class="form-input" min="1" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-book-title">Title <span class="required">*</span></label>
+          <input type="text" id="edit-book-title" class="form-input" maxlength="99" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-book-author">Author <span class="required">*</span></label>
+          <input type="text" id="edit-book-author" class="form-input" maxlength="99" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-book-category">Category</label>
+          <input type="text" id="edit-book-category" class="form-input" maxlength="99">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-edit-book')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Book</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Delete Book Confirmation -->
+<div class="modal-backdrop" id="modal-delete-book">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Delete Book</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-delete-book')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="delete-book-id">
+      <p style="font-size: 0.95rem; margin-bottom: 8px;">
+        Are you sure you want to delete <strong id="delete-book-title-display"></strong>?
+      </p>
+      <div class="badge badge-warning" style="display: block; padding: 8px; font-size: 0.8rem;">
+        Note: The C backend will prevent deletion if copies are currently issued.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-delete-book')">Cancel</button>
+      <button type="button" class="btn btn-danger" onclick="confirmDeleteBook()">Delete Book</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Add Member -->
+<div class="modal-backdrop" id="modal-add-member">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Register Member</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-add-member')">&times;</button>
+    </div>
+    <form id="form-add-member" onsubmit="handleAddMemberSubmit(event)">
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="add-member-id">Member ID <span class="required">*</span></label>
+            <input type="number" id="add-member-id" class="form-input" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="add-member-dept">Department</label>
+            <input type="text" id="add-member-dept" class="form-input" placeholder="e.g. Computer Science">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-member-name">Full Name <span class="required">*</span></label>
+          <input type="text" id="add-member-name" class="form-input" maxlength="99" placeholder="e.g. Alice Walker" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-member-email">Email <span class="required">*</span></label>
+          <input type="email" id="add-member-email" class="form-input" maxlength="99" placeholder="e.g. alice@univ.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="add-member-phone">Phone</label>
+          <input type="text" id="add-member-phone" class="form-input" maxlength="49" placeholder="e.g. 555-0101">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-member')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Edit Member -->
+<div class="modal-backdrop" id="modal-edit-member">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Edit Member</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-edit-member')">&times;</button>
+    </div>
+    <form id="form-edit-member" onsubmit="handleEditMemberSubmit(event)">
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="edit-member-id">Member ID</label>
+            <input type="number" id="edit-member-id" class="form-input" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-member-dept">Department</label>
+            <input type="text" id="edit-member-dept" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-member-name">Full Name <span class="required">*</span></label>
+          <input type="text" id="edit-member-name" class="form-input" maxlength="99" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-member-email">Email <span class="required">*</span></label>
+          <input type="email" id="edit-member-email" class="form-input" maxlength="99" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="edit-member-phone">Phone</label>
+          <input type="text" id="edit-member-phone" class="form-input" maxlength="49">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-edit-member')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Delete Member Confirmation -->
+<div class="modal-backdrop" id="modal-delete-member">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Remove Member</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-delete-member')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="delete-member-id">
+      <p style="font-size: 0.95rem; margin-bottom: 8px;">
+        Are you sure you want to remove <strong id="delete-member-name-display"></strong>?
+      </p>
+      <div class="badge badge-warning" style="display: block; padding: 8px; font-size: 0.8rem;">
+        Note: The C backend will verify that this member has 0 unreturned books.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-delete-member')">Cancel</button>
+      <button type="button" class="btn btn-danger" onclick="confirmDeleteMember()">Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Issue Book (Simplified: Book + Member, no complex dates) -->
+<div class="modal-backdrop" id="modal-issue-book">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Issue Book</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-issue-book')">&times;</button>
+    </div>
+    <form id="form-issue-book" onsubmit="handleIssueSubmit(event)">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="issue-book-select">Select Available Book <span class="required">*</span></label>
+          <select id="issue-book-select" class="form-input" required></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="issue-member-select">Select Member <span class="required">*</span></label>
+          <select id="issue-member-select" class="form-input" required></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-issue-book')">Cancel</button>
+        <button type="submit" class="btn btn-gold">Issue Book</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Return Book Confirmation -->
+<div class="modal-backdrop" id="modal-return-book">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Return Book</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-return-book')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="return-tx-id">
+      <p style="font-size: 0.95rem;">
+        Confirm return of <strong id="return-book-title-display"></strong>?
+      </p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">
+        Available copies will be incremented in <code>books.dat</code>.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-return-book')">Cancel</button>
+      <button type="button" class="btn btn-gold" onclick="confirmReturnBook()">Confirm Return</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Reset Sample Data -->
+<div class="modal-backdrop" id="modal-reset-demo">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3>Reset Sample Data</h3>
+      <button class="modal-close-btn" onclick="closeModal('modal-reset-demo')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 0.92rem;">
+        This will restore default sample books and members in the C database files.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('modal-reset-demo')">Cancel</button>
+      <button type="button" class="btn btn-primary" onclick="confirmResetDemo()">Reset Data</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

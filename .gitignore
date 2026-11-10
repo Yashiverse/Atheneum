@@ -1,0 +1,14 @@
+# Compiled C Binaries & Objects
+*.exe
+*.o
+*.obj
+*.out
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Optional logs or temp files
+*.log
+*.tmp
+backend/data/*_tmp.dat
